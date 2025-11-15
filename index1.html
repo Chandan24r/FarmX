@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Crop - Farmer Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            background: #f4f4f4;
+        }
+        .navbar {
+            background-color: #333333;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 0 10px;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            padding: 20px;
+        }
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        header {
+            background: #4CAF50;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 4px 2px -2px gray;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background-image: url('sunny.jpg');
+            background-repeat: no-repeat;
+            background-size: 1400px 910px;
+        }
+        .form-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .form-container h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group input[type="submit"] {
+            background: #4CAF50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .form-group input[type="submit"]:hover {
+            background: #45a049;
+        }
+        footer {
+            background: #333333;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        .margin {
+            margin-bottom: 50px;
+            size: 30px;
+            padding: 10px;
+        }
+        .navbar-links {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="farmX Logo">
+            <h1>farmX</h1>
+        </div>
+        <div class="navbar-links">
+            <a href="front.html">Home</a>
+            <a href="mycrops.html">My Crops</a>
+            <a href="index.html">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-container">
+            <h2><u>Farmer Info</u></h2>
+            <form id="farmerForm">
+                <div class="form-group">
+                    <label for="farmerName"><b>Farmer Name</b></label>
+                    <input type="text" id="farmerName" name="farmerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactInfo"><b>Contact-Info</b></label>
+                    <input type="text" id="contactInfo" name="contactInfo" required>
+                </div>
+                <div class="form-group">
+                    <label for="farmerLocation"><b>Address</b></label>
+                    <input type="text" id="farmerLocation" name="farmerLocation" required>
+                </div>
+                <h2><u>Add Crop</u></h2>
+                <div class="form-group">
+                    <label for="cropName"><b>Crop-Name</b></label>
+                    <input type="text" id="cropName" name="cropName" required>
+                </div>
+                <div class="form-group">
+                    <label for="cropDescription"><b>Crop-Description</b></label>
+                    <input type="text" id="cropDescription" name="cropDescription" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantity"><b>Quantity (in kg)</b></label>
+                    <input type="number" id="quantity" name="quantity" required>
+                </div>
+                <div class="form-group">
+                    <label for="price"><b>Price (TotalPrice)</b></label>
+                    <input type="number" id="price" name="price" required>
+                </div>
+                <div class="form-group">
+                    <label for="cropLocation"><b>Address</b></label>
+                    <input type="text" id="cropLocation" name="cropLocation" required>
+                </div>
+                <div class="form-group">
+                  <a href="addedcrop.html"> <input type="submit" value="Add Crop"></a> 
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 farmX. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('farmerForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const farmerid = localStorage.getItem('farmerid');
+            if (!farmerid) {
+                alert('You must be logged in to add a crop.');
+                return;
+            }
+
+            const data = {
+                farmerName: document.getElementById('farmerName').value,
+                contactInfo: document.getElementById('contactInfo').value,
+                farmerLocation: document.getElementById('farmerLocation').value,
+                cropName: document.getElementById('cropName').value,
+                cropDescription: document.getElementById('cropDescription').value,
+                quantity: document.getElementById('quantity').value,
+                price: document.getElementById('price').value,
+                cropLocation: document.getElementById('cropLocation').value,
+                farmerid: farmerid
+            };
+
+            try {
+                const response = await fetch('http://localhost:5500/add-crop', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    localStorage.setItem('cropid', data.cropid); 
+                    alert('Crop added successfully!');
+                    document.getElementById('farmerForm').reset();
+                } else {
+                    const errorData = await response.json();
+                    alert('Failed to add crop: ' + errorData.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while adding the crop.');
+            }
+        });
+    </script>
+</body>
+</html>

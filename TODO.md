@@ -1,0 +1,21 @@
+# TODO: Replace "agri-connect" and "framX" with "farmX" in the whole project
+
+- [x] Rename framX.sql to farmX.sql
+- [x] Update "name": "framX-main" to "farmX-main" in package.json
+- [x] Update "name": "framX-main" to "farmX-main" in package-lock.json
+- [x] Replace "framX" with "farmX" in README.md
+- [x] Replace "AGRI-CONNECT" with "farmX" in index.html
+- [x] Replace "AGRI-CONNECT" with "farmX" in front.html
+- [x] Replace "AGRI-CONNECT" with "farmX" in index1.html
+- [x] Replace "AGRI-CONNECT" with "farmX" in mycrops.html
+- [x] Replace "AGRI-CONNECT" with "farmX" in orders.html
+- [x] Replace "AGRI-CONNECT" with "farmX" in pay.html
+- [x] Replace "AGRI-CONNECT" with "farmX" in Thankyou.html
+- [x] Replace "AGRI-CONNECT" with "farmX" in vendor.html
+- [x] Update database name from 'agriconnect' to 'farmx' in server.js
+- [x] Update database creation from AGRICONNECT to farmX in farmX.sql
+- [x] Create farmX database in MySQL
+- [x] Import tables into farmX database
+- [x] Test server startup
+- [x] Add logo to navigation bar in front.html
+- [ ] Add logo to navigation bar on all other HTML pages (index.html, index1.html, mycrops.html, orders.html, pay.html, Thankyou.html, vendor.html)

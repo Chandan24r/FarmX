@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Orders</title>
+    <style>
+        body,
+    h1,
+    h2,
+    h3,
+    p,
+    ul,
+    li,
+    a {
+        margin: 0;
+        padding: 0;
+    }
+    
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    
+    .navbar {
+        background-color: #5c9e78;
+        color: white;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logo img {
+        height: 40px;
+        margin-right: 10px;
+    }
+    
+    .navbar-links {
+        display: flex;
+        align-items: center;
+    }
+    
+    .navbar-links a {
+        color: white;
+        text-decoration: none;
+        padding: 0 15px;
+        font-size: 1rem;
+        transition: color 0.3s;
+    }
+    
+    .navbar-links a:hover {
+        color: #444239;
+        text-decoration: underline;
+    }
+    
+    .container {
+        padding: 40px;
+        background-color: #ffffff;
+        margin: 40px auto;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        border-radius: 10px;
+    }
+    
+    h1 {
+        text-align: center;
+        color: #333333;
+        font-size: 2rem;
+    
+    }
+    
+    .orders-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    
+    .orders-table th,
+    .orders-table td {
+        padding: 15px;
+        border: 1px solid #ddd;
+        text-align: left;
+        font-size: 1rem;
+    }
+    
+    .orders-table th {
+        background-color: #5c9e78;
+        color: white;
+        font-weight: bold;
+    }
+    
+    .orders-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    
+    .orders-table tr:hover {
+        background-color: #e9ecef;
+        transition: background-color 0.3s;
+    }
+    
+    .btn {
+        padding: 10px 15px;
+        background-color: #77a363;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+        background-color: #6fad7a;
+    }
+    
+    footer {
+        background-color: #333333;
+        color: #fff;
+        padding: 15px;
+        text-align: center;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        margin-top: auto;
+    }
+    
+    footer p {
+        margin: 0;
+        font-size: 0.9rem;
+    }
+    </style>
+    </head>
+    <body>
+        <header>
+            <div class="navbar">
+                <div class="logo">
+                    <img src="logo.png" alt="farmX Logo">
+                    <h1>farmX</h1>
+                </div>
+                <div class="navbar-links">
+                    <a href="#">Home</a>
+                    <a href="vendor.html">Back</a>
+                    <a href="#">Profile</a>
+                    <a href="buy.html">Logout</a>
+                </div>
+            </div>
+        </header>
+    
+        <main>
+            <div class="container">
+                <h1>MY ORDERS</h1>
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Crop</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Example row -->
+                        <tr>
+                            <td>12345</td>
+                            <td>Apples</td>
+                            <td>100 kg</td>
+                            <td>$200</td>
+                          
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+            </div>
+    
+        <footer>
+            <p>&copy; 2026
+                 farmX. All rights reserved.</p>
+        </footer>
+        </main>
+
+    <script>
+    async function fetchOrders() {
+    try {
+        const buyerid = localStorage.getItem('buyerid');
+        if (!buyerid) {
+            alert('You must be logged in to view orders.');
+            return;
+        }
+
+        const response = await fetch('http://localhost:5500/orders1', {
+            headers: { 'buyerid': buyerid }
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Failed to fetch orders: ${response.status} ${response.statusText} - ${errorText}`);
+        }
+
+        const contentType = response.headers.get('content-type');
+        let data;
+        if (contentType && contentType.includes('application/json')) {
+            data = await response.json();
+        } else {
+            const text = await response.text();
+            throw new Error(`Unexpected response format: ${text}`);
+        }
+
+        // Populate orders data in the table
+        const ordersTableBody = document.querySelector('.orders-table tbody');
+        ordersTableBody.innerHTML = ''; // Clear existing rows
+
+        data.forEach(order => {
+            const row = document.createElement('tr');
+
+            const orderIdCell = document.createElement('td');
+            orderIdCell.textContent = order.orderid;
+
+            const cropNameCell = document.createElement('td');
+            cropNameCell.textContent = order.cropname;
+
+            const quantityAvailableCell = document.createElement('td');
+            quantityAvailableCell.textContent = order.quantityavailable;
+
+            const totalPriceCell = document.createElement('td');
+            totalPriceCell.textContent = order.totalprice;
+
+            
+
+            row.appendChild(orderIdCell);
+            row.appendChild(cropNameCell);
+            row.appendChild(quantityAvailableCell);
+            row.appendChild(totalPriceCell);
+        
+
+            ordersTableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        alert(`An error occurred while fetching orders: ${error.message}`);
+    }
+}
+
+window.onload = fetchOrders;
+
+
+   </script>
+    </body>
+      </html>
