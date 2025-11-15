@@ -1,2 +1,2 @@
-# farmX
+# FarmX
 
